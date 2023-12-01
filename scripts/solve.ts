@@ -1,37 +1,62 @@
-import { argv } from 'bun'
-import chalk from 'chalk'
-import { formatPerformance, withPerformance, isBetween } from './utils.ts'
-import { scaffold } from './scaffold.ts'
+import { argv } from "bun";
+import chalk from "chalk";
+import { formatPerformance, withPerformance, isBetween } from "./utils.ts";
+import { scaffold } from "./scaffold.ts";
 
-const day = parseInt(argv[2] ?? '')
-const year = parseInt(process.env.YEAR ?? new Date().getFullYear())
+const day = parseInt(argv[2] ?? "");
+const year = parseInt(process.env.YEAR ?? new Date().getFullYear());
 
 if (!isBetween(day, [1, 25])) {
-  console.log(`🎅 Pick a day between ${chalk.bold(1)} and ${chalk.bold(25)}.`)
-  console.log(`🎅 To get started, try: ${chalk.cyan('bun solve 1')}`)
-  process.exit(0)
+    console.log(
+        `🎅 Pick a day between ${chalk.bold(1)} and ${chalk.bold(25)}.`,
+    );
+    console.log(`🎅 To get started, try: ${chalk.cyan("bun solve 1")}`);
+    process.exit(0);
 }
 
-await scaffold(day, year)
+await scaffold(day, year);
 
-const name = `${day}`.padStart(2, '0')
+const name = `${day}`.padStart(2, "0");
 
-const { default: input } = await import(`@/${name}/input.txt`)
-const { partOne, partTwo, parse } = await import(`@/${name}/${name}.ts`)
+const { default: input } = await import(`@/${name}/input.txt`);
+const { default: exampleA } = await import(`@/${name}/exampleA.txt`);
+const { default: exampleB } = await import(`@/${name}/exampleB.txt`);
+const { partOne, partTwo, testResults } = await import(`@/${name}/${name}.ts`);
 
-const [one, onePerformance] = withPerformance(() => partOne?.(parse(input)))
-const [two, twoPerformance] = withPerformance(() => partTwo?.(parse(input)))
+const [oneTest, oneTestPerformance] = withPerformance(
+    () => partOne(exampleA) === testResults.partOne,
+);
+const [one, onePerformance] = withPerformance(() => partOne(input));
+const [twoTest, twoTestPerformance] = withPerformance(
+    () => partTwo(exampleB) === testResults.partTwo,
+);
+const [two, twoPerformance] = withPerformance(() => partTwo(input));
 
-console.clear()
+console.clear();
+console.log(`🎅 Day ${day} of ${year}`);
+console.log();
 console.log(
-  '🌲',
-  'Part One:',
-  chalk.green(one ?? '—'),
-  one ? `(${formatPerformance(onePerformance)})` : ''
-)
+    "🌲",
+    "Part One:",
+    chalk.green(oneTest ? "Passed" : "Failed"),
+    `(${formatPerformance(oneTestPerformance)})`,
+);
 console.log(
-  '🎄',
-  'Part Two:',
-  chalk.green(two ?? '—'),
-  two ? `(${formatPerformance(twoPerformance)})` : ''
-)
+    "🌲",
+    "Part One:",
+    chalk.green(one ?? "—"),
+    one ? `(${formatPerformance(onePerformance)})` : "",
+);
+console.log();
+console.log(
+    "🎄",
+    "Part Two:",
+    chalk.green(twoTest ? "Passed" : "Failed"),
+    `(${formatPerformance(twoTestPerformance)})`,
+);
+console.log(
+    "🎄",
+    "Part Two:",
+    chalk.green(two ?? "—"),
+    two ? `(${formatPerformance(twoPerformance)})` : "",
+);

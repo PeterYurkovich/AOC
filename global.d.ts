@@ -1,6 +1,6 @@
 declare module "bun" {
-  interface Env {
-    SESSION: string
-    YEAR: string
-  }
+    interface Env {
+        SESSION: string;
+        YEAR: string;
+    }
 }
