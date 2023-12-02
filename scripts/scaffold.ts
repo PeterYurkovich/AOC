@@ -42,9 +42,9 @@ export async function scaffold(day: number, year: number) {
     });
 
     await Bun.write(new URL(`${name}.ts`, directory.href), solution);
-    await Bun.write(new URL(`input.txt`, directory.href), input ?? "");
-    await Bun.write(new URL(`exampleA.txt`, directory.href), "");
-    await Bun.write(new URL(`exampleB.txt`, directory.href), "");
+    await Bun.write(new URL(`input.txt`, directory.href), input ?? " ");
+    await Bun.write(new URL(`exampleA.txt`, directory.href), " ");
+    await Bun.write(new URL(`exampleB.txt`, directory.href), " ");
 
     console.log("📂 You all set up, have fun!");
 }
