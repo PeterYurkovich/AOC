@@ -26,8 +26,8 @@ export async function scaffold(day: number, year: number) {
     }
     
     export const testResults = {
-        partOne: 0,
-        partTwo: 0,
+        partOne: 1,
+        partTwo: 1,
     };
     `;
 

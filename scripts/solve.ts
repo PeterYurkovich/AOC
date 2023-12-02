@@ -23,13 +23,9 @@ const { default: exampleA } = await import(`@/${name}/exampleA.txt`);
 const { default: exampleB } = await import(`@/${name}/exampleB.txt`);
 const { partOne, partTwo, testResults } = await import(`@/${name}/${name}.ts`);
 
-const [oneTest, oneTestPerformance] = withPerformance(
-    () => partOne(exampleA) === testResults.partOne,
-);
+const [oneTest, oneTestPerformance] = withPerformance(() => partOne(exampleA));
 const [one, onePerformance] = withPerformance(() => partOne(input));
-const [twoTest, twoTestPerformance] = withPerformance(
-    () => partTwo(exampleB) === testResults.partTwo,
-);
+const [twoTest, twoTestPerformance] = withPerformance(() => partTwo(exampleB));
 const [two, twoPerformance] = withPerformance(() => partTwo(input));
 
 console.clear();
@@ -38,7 +34,7 @@ console.log();
 console.log(
     "🌲",
     "Part One:",
-    chalk.green(oneTest ? "Passed" : "Failed"),
+    chalk.green(oneTest === testResults.partOne ? "Passed" : "Failed"),
     `(${formatPerformance(oneTestPerformance)})`,
 );
 console.log(
@@ -51,7 +47,7 @@ console.log();
 console.log(
     "🎄",
     "Part Two:",
-    chalk.green(twoTest ? "Passed" : "Failed"),
+    chalk.green(twoTest),
     `(${formatPerformance(twoTestPerformance)})`,
 );
 console.log(
