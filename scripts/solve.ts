@@ -34,7 +34,7 @@ console.log();
 console.log(
     "🌲",
     "Part One:",
-    chalk.green(oneTest === testResults.partOne ? "Passed" : "Failed"),
+    chalk.green(oneTest),
     `(${formatPerformance(oneTestPerformance)})`,
 );
 console.log(
