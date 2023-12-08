@@ -20,12 +20,11 @@ const name = `${day}`.padStart(2, "0");
 
 const { default: input } = await import(`@/${name}/input.txt`);
 const { default: exampleA } = await import(`@/${name}/exampleA.txt`);
-const { default: exampleB } = await import(`@/${name}/exampleB.txt`);
 const { partOne, partTwo, testResults } = await import(`@/${name}/${name}.ts`);
 
 const [oneTest, oneTestPerformance] = withPerformance(() => partOne(exampleA));
 const [one, onePerformance] = withPerformance(() => partOne(input));
-const [twoTest, twoTestPerformance] = withPerformance(() => partTwo(exampleB));
+const [twoTest, twoTestPerformance] = withPerformance(() => partTwo(exampleA));
 const [two, twoPerformance] = withPerformance(() => partTwo(input));
 
 console.clear();
